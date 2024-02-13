@@ -17,5 +17,5 @@ protocol.
 I will use the NodeJS framework to develop my software. I am advised
 to use code samples from the lab tutorials and online sources by
 providing the appropriate references (in text and code). I am also
-encouraged to improvise giving clear descriptions of your functionality
+encouraged to improvise giving clear descriptions of the added functionality
 and your implementation decisions.
