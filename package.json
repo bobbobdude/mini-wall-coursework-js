@@ -1,0 +1,19 @@
+{
+  "name": "mini-wall-app",
+  "version": "1.0.0",
+  "description": "MiniWall is a SaaS API where users can post their thoughts, views, or criticisms for everyone to see while other users can browse and interact by providing comments and likes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/University-of-London/csm020-coursework-bobbobdude.git"
+  },
+  "author": "Thomas Robert Gardner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/University-of-London/csm020-coursework-bobbobdude/issues"
+  },
+  "homepage": "https://github.com/University-of-London/csm020-coursework-bobbobdude#readme"
+}
