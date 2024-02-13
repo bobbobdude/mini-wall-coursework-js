@@ -4,7 +4,7 @@
   "description": "MiniWall is a SaaS API where users can post their thoughts, views, or criticisms for everyone to see while other users can browse and interact by providing comments and likes.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/University-of-London/csm020-coursework-bobbobdude/issues"
   },
-  "homepage": "https://github.com/University-of-London/csm020-coursework-bobbobdude#readme"
+  "homepage": "https://github.com/University-of-London/csm020-coursework-bobbobdude#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.3",
+    "express": "^4.18.2",
+    "joi": "^17.12.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.2",
+    "nodemon": "^3.0.3"
+  }
 }
