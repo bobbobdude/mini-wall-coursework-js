@@ -22,7 +22,22 @@ router.get('/:userId', async(req,res)=>{
 })
 
 router.post('/', async(req,res)=>{
-    console.log(req.body)
+    //console.log(req.body)
+    const postData = new Post({
+        post_title: req.body.post_title,
+        timestamp: req.body.timestamp,
+        post_owner: req.body.post_owner,
+        post_description: req.body.post_description,
+        likes: 0
+    })
+
+    try{
+        const postToSave = await postData.save()
+        res.send(postToSave)
+    }catch{
+        res.send({message:err})
+    }
+
 })
 
 module.exports = router 
