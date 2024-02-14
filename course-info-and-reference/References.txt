@@ -2,3 +2,4 @@ References in order of use:
 
 University of London (2024). CSM020-2024-JAN: 2.8 Lab 2, Task 1: Building the MiniFilm application using MongoDB and NodeJS. [online] London.ac.uk. Available at: https://learn.london.ac.uk/mod/page/view.php?id=146127 [Accessed 14 Feb. 2024].
 
+University of London (2024b). CSM020-2024-JAN: 3.8 Lab 3, Part 1: Building the MiniPost REST microservice. [online] London.ac.uk. Available at: https://learn.london.ac.uk/mod/page/view.php?id=146146 [Accessed 14 Feb. 2024].

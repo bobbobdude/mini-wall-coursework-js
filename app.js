@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 require('dotenv/config')
 
 const loginRoute = require('./routes/login')
@@ -8,6 +9,8 @@ const postsRoute = require('./routes/posts')
 
 //Middleware
 app.use('/login', loginRoute)
+
+app.use(bodyParser.json())
 app.use('/posts', postsRoute)
 
 
