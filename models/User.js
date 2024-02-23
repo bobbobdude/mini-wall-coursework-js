@@ -20,7 +20,7 @@ const UsersSchema = mongoose.Schema({
         max:1024
     },
     date: {
-        type:date,
+        type:Date,
         default:Date.now 
     },
 })
