@@ -4,14 +4,13 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 require('dotenv/config')
 
-const loginRoute = require('./routes/login')
 const postsRoute = require('./routes/posts')
+const authRoute = require('./routes/auth')
 
 //Middleware
-app.use('/login', loginRoute)
-
 app.use(bodyParser.json())
 app.use('/posts', postsRoute)
+app.use('/api/user', authRoute)
 
 
 app.get('/', (req,res)=> {
