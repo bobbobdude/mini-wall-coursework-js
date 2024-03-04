@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../models/User')
-const {registerValidation} = require('../validations/validation')
+const {registerValidation,loginValidation} = require('../validations/validation')
+
+const bcryptjs = require('bcryptjs')
 
 router.post('/register', async(req,res)=>{
     const {error} = registerValidation(req.body)
@@ -15,10 +17,13 @@ router.post('/register', async(req,res)=>{
         return res.status(400).send({message:'User already exists. Try logging in with your email.'})
     }
 
+    const salt = await bcryptjs.genSalt(5)
+    const hashedPassword = await bcryptjs.hash(req.body.password, salt)
+
     const user = new User({
         username:req.body.username,
         email:req.body.email,
-        password:req.body.password
+        password:hashedPassword
 
     })
 
@@ -32,7 +37,7 @@ router.post('/register', async(req,res)=>{
 })
 
 router.post('/login', async(req,res)=>{
-
+    
 })
 
 module.exports = router
