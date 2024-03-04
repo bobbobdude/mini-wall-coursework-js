@@ -6,7 +6,9 @@ const {registerValidation} = require('../validations/validation')
 
 router.post('/register', async(req,res)=>{
     const {error} = registerValidation(req.body)
-    res.send({message:error['details'][0]['message']})
+    if(error){
+        res.send({message:error['details'][0]['message']})
+    }
 
     
 })
