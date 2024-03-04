@@ -38,6 +38,24 @@ router.post('/register', async(req,res)=>{
 
 router.post('/login', async(req,res)=>{
     
+    const {error} = loginValidation(req.body)
+    if(error){
+        return res.status(400).send({message:error['details'][0]['message']})
+    }
+
+
+    const user = await User.findOne({email:req.body.email})
+    if (!user){
+        return res.status(400).send({message:'User does not exist. Try creating an account with your email.'})
+    }
+
+    const passwordValidation = await bcryptjs.compare(req.body.password, user.password)
+    if(!passwordValidation){
+        return res.status(400).send({message:'Incorrect password'})
+    }
+
+    res.send('SUCCESS')
+
 })
 
 module.exports = router
