@@ -5,6 +5,7 @@ const User = require('../models/User')
 const {registerValidation,loginValidation} = require('../validations/validation')
 
 const bcryptjs = require('bcryptjs')
+const jsonwebtoken = require('jsonwebtoken')
 
 router.post('/register', async(req,res)=>{
     const {error} = registerValidation(req.body)
@@ -54,7 +55,9 @@ router.post('/login', async(req,res)=>{
         return res.status(400).send({message:'Incorrect password'})
     }
 
-    res.send('SUCCESS')
+    //Here we generate an token that authorises the user to access the data on the DB
+    const token = jsonwebtoken.sign({_id:user._id}, process.env.TOKEN_SECRET)
+    res.header('auth-token', token).send({'auth-token':token})
 
 })
 
