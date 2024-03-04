@@ -15,7 +15,7 @@ router.get("/", verifyToken, async (req, res) =>{
 })
 
 //GET individual user 
-router.get('/:userId', async(req,res)=>{
+router.get('/:userId',verifyToken, async(req,res)=>{
     try{
         const specificPostById = await Post.findById(req.params.userId)
         res.send(specificPostById)
@@ -25,7 +25,7 @@ router.get('/:userId', async(req,res)=>{
 })
 
 //POST data to database
-router.post('/', async(req,res)=>{
+router.post('/',verifyToken, async(req,res)=>{
     const postData = new Post({
         post_title: req.body.post_title,
         timestamp: req.body.timestamp,
@@ -44,7 +44,7 @@ router.post('/', async(req,res)=>{
 })
 
 //PATCH existing data
-router.patch('/:postId', async(req,res) =>{
+router.patch('/:postId',verifyToken, async(req,res) =>{
     try{
         const updatePostById = await Post.updateOne(
             {_id:req.params.postId},
@@ -63,7 +63,7 @@ router.patch('/:postId', async(req,res) =>{
 })
 
 //DELETE specific user 
-router.delete('/:postId', async(req,res)=>{
+router.delete('/:postId',verifyToken, async(req,res)=>{
     try{
         const deletePostById = await Post.deleteOne({_id:req.params.postId})
         res.send(deletePostById)
