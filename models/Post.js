@@ -5,7 +5,8 @@ const PostsSchema = mongoose.Schema({
         type:String 
     },
     timestamp: {
-        type:Date
+        type:Date,
+        default:Date.now 
     },
     post_owner: {
         type:String 
