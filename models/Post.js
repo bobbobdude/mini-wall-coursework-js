@@ -11,6 +11,9 @@ const PostsSchema = mongoose.Schema({
     post_owner: {
         type:String 
     },
+    post_owner_id: {
+        type:String 
+    },
     post_description: {
         type:String 
     },

@@ -61,4 +61,10 @@ router.post('/login', async(req,res)=>{
 
 })
 
+//A quickly written bit of code to get all users currently in DB
+router.get('/users', async(req,res)=>{
+    const allUsers = await User.find()
+    return res.send(allUsers)
+})
+
 module.exports = router

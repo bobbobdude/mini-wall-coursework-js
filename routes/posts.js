@@ -3,6 +3,7 @@ const router = express.Router()
 
 const Post = require('../models/Post')
 const Comment = require('../models/Comment')
+const User = require('../models/User')
 const verifyToken = require('../verifyToken')
 
 //GET all users
@@ -25,6 +26,7 @@ router.get('/:postId',verifyToken, async(req,res)=>{
     }
 })
 
+//GET all comments on a particular post
 router.get('/:postId/comments', verifyToken, async(req,res)=>{
     try {
         const postExists = await Post.findById(req.params.postId)
@@ -43,10 +45,14 @@ router.get('/:postId/comments', verifyToken, async(req,res)=>{
 
 //POST data to database
 router.post('/',verifyToken, async(req,res)=>{
+    const userId = req.user._id
+    const user = await User.findById(userId) //First we find the user in the DB from the userId provided in the headers and create a variable containing this data
+    console.log(userId) //This gets the unique user ID from the verify function and prints it on the console in VSCode
     const postData = new Post({
         post_title: req.body.post_title,
         timestamp: req.body.timestamp,
-        post_owner: req.body.post_owner,
+        post_owner: user.username,
+        post_owner_id: userId,
         post_description: req.body.post_description,
         likes: 0
     })
@@ -63,12 +69,19 @@ router.post('/',verifyToken, async(req,res)=>{
 //POST a comment on a particular post 
 
 router.post('/:postId/comments',verifyToken, async(req,res)=>{
-    
+    const userIdOfCommenter = req.user._id
+    const postToCommentOn = await Post.findById(req.params.postId)
+    console.log(postToCommentOn)
+    const originalPoster = postToCommentOn.post_owner_id
+
+    if (userIdOfCommenter == originalPoster){
+        return res.send("You cannot comment on your own post.")
+    } 
     const commentData = new Comment({
         id_of_post_to_comment_on: req.params.postId, //This should take the post id sent in the URL and assign it to this variable
         comment: req.body.comment,
         timestamp:req.body.timestamp,
-        comment_owner: req.body.comment_owner,
+        comment_owner_id: userIdOfCommenter,
         likes: 0
     })
 
