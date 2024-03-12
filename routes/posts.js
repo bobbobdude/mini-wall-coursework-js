@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Post = require('../models/Post')
+const Comment = require('../models/Comment')
 const verifyToken = require('../verifyToken')
 
 //GET all users
@@ -14,13 +15,29 @@ router.get("/", verifyToken, async (req, res) =>{
     }
 })
 
-//GET individual user 
-router.get('/:userId',verifyToken, async(req,res)=>{
+//GET individual post 
+router.get('/:postId',verifyToken, async(req,res)=>{
     try{
-        const specificPostById = await Post.findById(req.params.userId)
+        const specificPostById = await Post.findById(req.params.postId)
         res.send(specificPostById)
     }catch(err){
         res.send({message:err})
+    }
+})
+
+router.get('/:postId/comments', verifyToken, async(req,res)=>{
+    try {
+        const postExists = await Post.findById(req.params.postId)
+        console.log("You are reading the comments on this post:", postExists)
+        const allCommentsOnPost = await Comment.find({id_of_post_to_comment_on:req.params.postId})
+        if (allCommentsOnPost.length == 0){
+            return res.status(400).send({ message: 'No comments found. Try another post' }); //This works! If no COMMENTS are found this pops up
+        }else{
+            res.send(allCommentsOnPost) //This also works! If comments are found they are returned to the user
+        }
+    } catch (err) {
+        console.error('Error fetching post:', err);
+        res.status(400).send({ message: 'Error fetching post. Please try another PostId', error: err })//Users should only get here if the postId does not exist adn therefore they are trying to comment on something that doesnt exist
     }
 })
 
@@ -39,6 +56,28 @@ router.post('/',verifyToken, async(req,res)=>{
         res.send(postToSave)
     }catch{
         res.send({message:err})
+    }
+
+})
+
+//POST a comment on a particular post 
+
+router.post('/:postId/comments',verifyToken, async(req,res)=>{
+    
+    const commentData = new Comment({
+        id_of_post_to_comment_on: req.params.postId, //This should take the post id sent in the URL and assign it to this variable
+        comment: req.body.comment,
+        timestamp:req.body.timestamp,
+        comment_owner: req.body.comment_owner,
+        likes: 0
+    })
+
+    try{
+        const postExists = await Post.findById(req.params.postId)
+        const commentToSave = await commentData.save()
+        res.send(commentToSave)
+    }catch(err){
+        res.status(400).send({ message: 'Error finding post or incorrect body sent. Please try another PostId or modify the body to match the comment schema', error: err })
     }
 
 })
