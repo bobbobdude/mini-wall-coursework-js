@@ -114,6 +114,30 @@ router.patch('/:postId',verifyToken, async(req,res) =>{
     }
 })
 
+//Like functionality
+router.patch('/:postId/like', verifyToken, async(req,res) => {
+    const userIdOfLiker = req.user._id
+    const postToLike = await Post.findById(req.params.postId)
+    console.log("Gets here")
+    if (userIdOfLiker == postToLike.post_owner_id){
+        return res.send("You cannot like your own post.")
+    } 
+    console.log(postToLike)
+    try{
+        if (postToLike.users_who_have_liked.includes(userIdOfLiker)){
+            return res.send("You cannot like a post twice.")
+        }
+        else{
+            postToLike.users_who_have_liked.push(userIdOfLiker)
+            postToLike.likes +=1
+            const likedPost = await postToLike.save();
+            res.send(likedPost)
+        }
+    }catch(err){
+        res.send({message:err})
+    }
+})
+
 //DELETE specific user 
 router.delete('/:postId',verifyToken, async(req,res)=>{
     try{

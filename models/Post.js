@@ -19,7 +19,11 @@ const PostsSchema = mongoose.Schema({
     },
     likes: {
         type:Number
-    }
+    },
+    users_who_have_liked: [{
+        type: String
+    },
+],
 })
 
 module.exports = mongoose.model('Post', PostsSchema)
